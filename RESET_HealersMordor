@@ -1,0 +1,71 @@
+#CLASS 0
+$ParentClass = "Tools|HealMe|Healers"
+
+$healer="CUH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The shaman takes your (%d) gold and heals you.} {HealAgain} $CLASS
+#TR {Shaman says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Shaman says*: You're already healed!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Shaman says: I'm a bit busy at the moment!} {HealNext} $CLASS
+#TR {^What?} {#IF (%roomid=cuh) {#T+ check_cuh;#T+ cuh_shamanRoomShort;glance shaman}} $CLASS
+#TR check_cuh {You don't see that here.} {#T- check_cuh;#T- cuh_shamanRoomShort;HealNext} $CLASS
+#TR cuh_shamanRoomShort {A powerful aura of intrigue and mystery surrounds Shaman!} {#T- check_cuh;#T- cuh_shamanRoomShort;HealAgain} $CLASS
+#TR {Shaman says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+
+$healer="FLSH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Before you have a chance to change your mind, the healer grabs you by} {HealAgain} $CLASS
+#TR {Doctor says*: kxha gartxhue} {HealAgain} $CLASS
+#TR {Doctor says*: Just a moment.  I'm healing someone now.} {HealAgain} $CLASS
+#TR {Doctor says*: olk toth' antharg unth you quant gha} {HealCond} $CLASS
+#TR {Doctor says*: You don't look like you need help} {HealCond} $CLASS
+#TR {Doctor says*: You're lucky} {HealNext} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Doctor says*: kaz toth' grunt uthg unth.} {HealGetGold} $CLASS
+#TR {Doctor says in Easterling: I don't believe in charity.} {HealGetGold} $CLASS
+
+$healer="BDBar"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The black Numenorean reaches into his pouch for a dried brown leaf.} {HealAgain} $CLASS
+#TR {Black numenorean says*: One moment; I have a small task to} {HealAgain} $CLASS
+#TR {Black numenorean says*: pai zhou; zhou vah dhon vir} {HealAgain} $CLASS
+#TR {Black numenorean says*: u uur chan ya.} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Black numenorean says*: zhou aur air thein ran} {HealGetGold} $CLASS
+#TR {Black numenorean*: You need no assistance.} {HealCond} $CLASS
+
+$healer="MMH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Healer takes out some herbs and uses them to heal you.} {HealAgain} $CLASS
+#TR {Healer says*: Wait your turn damnit!  I'm busy right now.}  {HealAgain} $CLASS
+#TR {Healer says*: You're fine, begone!} {HealCond} $CLASS
+#TR {The healer yells*: Leave me be!  Come back in a while and I'll help you.} {HealNext} $CLASS
+#TR {Healer says*: Get out!  Come back when you have the cash.} {HealGetGold} $CLASS
+
+$healer="NarH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The Priest takes (%d) gold from you and heals you.} {HealAgain} $CLASS
+#TR {The priest says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {The priest says*: I can heal you no more, child.} {HealCond} $CLASS
+#TR {I'm sorry but I'm too exhausted! Come back some other time.} {HealNext} $CLASS
+#TR {The priest says*: I really am exhausted, but because you have donated so much, I will heal you once.} {HealNext} $CLASS
+#TR {The priest says*: Thank you for the donation, but I'm sorry, I'm too exhausted to give you any healing.} {HealNext} $CLASS
+#TR {The priest says*: What! You do not have enough gold!} {HealGetGold} $CLASS
+
+$healer="PBSH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The old man prepares an herbal solution and applies it to your} {HealAgain} $CLASS
+#TR {Old herbalist says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Old herbalist says*: You're already healed!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Old herbalist says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+
+$healer="RedH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {is a burning sensation in your throat that you can't explain...better not} {HealAgain} $CLASS
+#TR {The healer says*:  You healthy already!} {HealCond} $CLASS
+#TR {The healer looks pretty exhausted.} {HealNext} $CLASS
+#TR {The healer says*:  Me not work free.  Give money.} {HealGetGold} $CLASS
+
+#CLASS 0
