@@ -1,0 +1,10 @@
+#CLASS 0
+RESET_HealMeVariables
+RESET_HealMeEXE
+RESET_HealMeFood
+RESET_HealersArda
+RESET_HealersFarHarad
+RESET_HealersMordor
+RESET_HealersWestArda
+HealStop
+#CLASS 0
