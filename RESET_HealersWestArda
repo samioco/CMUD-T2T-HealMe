@@ -1,0 +1,32 @@
+#CLASS 0
+$ParentClass = "Tools|HealMe|Healers"
+
+$healer="BelH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Toli shoves some plants down your throat and you feel better.} {HealAgain} $CLASS
+#TR {Toli says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Toli says*: You're already healed!} {HealCond} $CLASS
+#TR {Toli says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+
+$healer="ComH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The doctor takes your (%d) gold and heals you.} {HealAgain} $CLASS
+#TR {Doctor says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Doctor says*: You're already healed!} {HealCond} $CLASS
+#TR {Doctor says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+
+$healer="RivH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The healer forces you to drink some bad smelling tea.} {HealAgain} $CLASS
+#TR {Healer says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Healer says*: You don't have the donation, my child.} {HealGetGold} $CLASS
+#TR {The healer is exhausted and needs time to rest.} {HealNext} $CLASS
+
+$healer="StadH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Ada Lovebucket takes your gold and twists your nose as she heals you.} {HealAgain} $CLASS
+#TR {Ada says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Ada says*: You're already healed!} {HealCond} $CLASS
+#TR {Ada says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#CLASS 0
