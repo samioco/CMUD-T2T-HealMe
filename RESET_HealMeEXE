@@ -1,0 +1,205 @@
+#CLASS 0
+$CLASS = "Tools|HealMe|EXE"
+#AL HealMe {
+MyProfileVars
+$MaxHP=%number(@MyMaxHP)
+SysMsg HealMe initiated... Running HealMe Check...
+#MATH MyHPDifferential @MyMaxHP-%number(%mud.hp)
+SysMsg HP Differential: @MyHPDifferential, HP: %mud.hp, MaxHP: @MyMaxHP
+#MATH MyEPDifferential @MyMaxHP-%number(%mud.ep)
+SysMsg EP Differential: @MyEPDifferential, EP: %mud.ep, MaxHP: @MyMaxHP
+#IF ( (@MyHPDifferential>20) || ((@MyEPDifferential>20) && (@Gear_EPDag || @Gear_EPKnife)) ) {
+  SysMsg Executing HealMe...
+  ActionAdd "#IF (@MyGold<100) {HealGetGold} {HealMeINIT;HealMeEXE}"
+  gold
+  ActionNext
+} {
+  SysMsg "HealMe Exiting... You are already healthy! (Or Don't have EPDag/EPKnife)"
+  HealEnd
+}
+} $CLASS
+
+#AL HealMeEXE {
+$templist=""
+SysMsg HealMeEXE initiated... Running HealMe check...
+$MaxHP=@MyMaxHP
+#IF ((($MaxHP-%mud.hp)>20) OR (($MaxHP-%mud.ep)>20)) {
+  #VAR HealStat {1} {} VAR
+  HealStat
+  GNH
+  #SW (%ismember(%lower(@Healer),%lower(@Healers_Roaming))) {
+    #EXE {%concat(@Healer,"Find")}
+  } {
+    ActionAdd "BotOn Healers|@Healer;BotOn HealMe;request healing"
+    ActionNext
+  }
+} {
+    SysMsg "HealMeEXE Exiting ... You are already healthy!"
+    HealEnd
+}
+} $CLASS
+
+#AL HealMeINIT {
+$Stealer=%lower(@Stealer)
+#UNT Alarm_Rest
+#VAR HealerList {} {} VAR
+#VAR HealStat {1} {} VAR
+#SW (%begins($Stealer,%lower("StealerBD"))) {
+  #VAR HealerList {"PBSH|RedH|FLSH|BDBar"} {} VAR
+} (%ismember($Stealer,%lower("StealerCarchost|StealerNarchost|StealerCU"))) {
+  #VAR HealerList {"NarH|CUH"} {} VAR
+} {
+  #SW ((@MyFaction="ER") AND (@MyTrueLevel<5)) {
+    #VAR HealerList {@ROOMS_Healers_FH_ID} {} VAR
+  } (@MyFaction="ER") {
+    #VAR HealerList {@ROOMS_Healers_ER_ID} {} VAR
+    #IF (!%pos("Far Harad",%zonename()) AND (!%pos("Tarzhayan",%zonename()))) {#DELI HealerList TarH}
+  } (@MyFaction="servant") {
+    #VAR HealerList {@ROOMS_Healers_Servant_ID} {} VAR
+    #IF (!%ismember(@MyPublicAlign,"Shadowspawn of Mordor")) {disguise align off}
+  } ((@MyFaction="FR") AND (@MyTrueLevel<5)) {
+    #VAR HealerList {@ROOMS_Healers_WestArda_ID} {} VAR
+  } (@MyFaction="FR") {
+    #VAR HealerList {@ROOMS_Healers_FR_ID} {} VAR
+    #IF ((!%ismember(@MyTrueAlign,@Alignments_Moral)) AND (!%ismember(@MyPublicAlign,@Alignments_Moral))) {#DELI HealerList CaraH}
+    #IF ((%pos("minas tirith",%lower(%zonename()))) AND (%ismember(%lower(@MyPublicAlign),%lower("Angelic|Hand of Eru")))) {
+      #ADDI HealerList MTAL
+      } {#DELI HealerList MTAL}
+  }
+  #IF ((%ismember(%lower(@MyFaction),%lower("ER|servant"))) AND (%pos("mordor",%lower(%zonename())))) {#FORALL  @Healers_Mordor {#ADDI HealerList %i}}
+  #IF (%ismember(%lower(@MyTrueAlign),%lower("Demonic|Shadowspawn of Mordor"))) {#ADDI HealerList MMH}
+}
+#IF ((%lower(@Grinder)=%lower("GrinderDharanSar")) AND (@CurMob="nervous guard")) {#DELI HealerList DHH}
+#ECHO Healers:  @HealerList
+} $CLASS
+
+
+#AL HealAgain {
+$MaxHP=@MyMaxHP
+$healer=%lower(@Healer)
+#VAR LastHealer {@Healer} {} VAR
+#WAIT %random(1,10)*100
+#IF ((($MaxHP-%mud.hp)>10) OR (($MaxHP-%mud.ep)>15)) {
+  #SW ($healer="narh") {#ALA "Alarm_HealMe" {+.1} {donate 60} $CLASS
+  } {#ALA "Alarm_HealMe" {+.1} {request healing} $CLASS
+  }
+} {HealEnd}
+} $CLASS
+
+#AL HealCond {
+$MaxHP=@{%concat(@MyName,"_MaxHP")}
+#ECHO Health: HP: %mud.hp || EP: %mud.ep
+#IF ((@Gear_EPDag || @Gear_EPKnife) && ((($MaxHP-%mud.hp)>10) || (($MaxHP-%mud.ep)>15))) {
+  #SW (@Healer="narh") {donate 60
+  } {DRH
+  }
+
+} {HealEnd}
+} $CLASS
+
+#AL HealCheckFaction {
+profile
+#WAIT 1000
+GNP
+HealMe
+} $CLASS
+
+#AL HealGetGold {
+#SW (%ismember(@Stealer,@StealerMordorSets)) {
+  #FORALL @StealerMordorSets {
+    #DELI StealerQueue %i
+    StealerNextSet
+  }
+} (%pos(%lower("Mordor"),%lower(%zonename()))) {HealEnd
+} {
+ActionAdd "HealMe"
+ActionAdd "GNB;open account;withdraw 200;gold;ActionNext"
+ActionNext
+}
+} $CLASS
+
+#AL HealHere {
+$roomID=%lower(%roomid())
+$Roaming_HealHere_Rooms=%lower(%concat(@Healers_Roaming,"|Thran|ThranIn|ThranB|Thranshop|ThranI|ThranBar|Loth|khamcamp|DhSP|DHI|TavSP|TavShop|TavI|TavC"))
+$HealHere_Rooms=""
+#FORALL @ROOMS_Healers_ID {#ADDI $HealHere_Rooms %lower(%i)}
+#FORALL $Roaming_HealHere_Rooms {#ADDI $HealHere_Rooms %lower(%i)}
+#ECHO HealHere: $HealHere_Rooms
+#IF (%ismember($roomID,$HealHere_Rooms)) {
+  #VAR HealerList {$roomID} {} VAR
+  #VAR Healer {$roomID} {} VAR
+  #VAR iHeal {1} {} VAR
+  #SW (!%ismember($roomID,$Roaming_HealHere_Rooms)) {
+    ClassOn $roomID
+    request healing
+  }  (%ismember($roomID,%lower("Loth|KhamH"))) {KhamH_Start
+  } (%ismember($roomID,%lower("DhSP|DHH"))) {DHH_Start
+  } (%begins($roomID,%lower("Tav"))) {TavH_Start
+  } (%begins($roomID,%lower("Thran"))) {ThranH_Start}
+} {
+  #VAR iHeal {} {} VAR
+  EatFood
+}
+} $CLASS
+
+#AL HealNext {
+#UNT "Alarm_HealMe"
+BotOff @Healer
+HealStat
+SysMsg Healer Exhausted: @Healer
+#DELI HealerList @Healer
+$wait=%random(1,2)
+#ALA "Alarm_HealMe" +$wait {HealNextEXE} $CLASS
+} $CLASS
+
+#AL HealNextEXE {
+#IF (%numitems(@HealerList)) {
+  SysMsg Healer Exhausted. Moving to next healer...
+  HealMeEXE
+} {
+  SysMsg All Healers exhausted.
+  HealStat
+  #SW (@Partybitch) {party say exhausted
+  } (@Stealer) {StealerNextSet
+  } (@ActionQueue) {ActionNext}
+}
+} $CLASS
+
+#AL HealNow {
+#UNT "Alarm_HealMe"
+request healing
+} $CLASS
+
+#AL HealStat {
+SysMsg HealStat: @HealStat, Healer list: @HealerList, @iHeal/%numitems(@HealerList),  Healer: @Healer
+} $CLASS
+
+#AL HealStop {
+#UNT "Alarm_HealMe"
+#IF (@HealStat) {SysMsg "HealMe completed."}
+#FORALL @Healers_All {#T- Healers|%i|Settings;#DELI BotsEnabled %i}
+BotOff HealMe
+#VAR iHeal {0} {} VAR
+#VAR HealStat {0} {} VAR
+#VAR Healer {} {} VAR
+#VAR LastHealer {} {} VAR
+#VAR HealerList {} {} VAR
+} $CLASS
+
+#AL HealEnd {
+#VAR HealerList {} {} VAR
+#VAR LastHealer {@Healer} {} VAR
+#UNT "Alarm_HealMe"
+BotOff @Healer
+HealStop
+#IF (@Gear_EPKnife) {unhand curved knife}
+#IF (@PartyBitch) {
+  $str="ok|nod|nodnod|ok|hop"
+  #EXE {%item($str,%random((%numitems($str))))}
+  PHP
+}
+#IF (@ActionQueue) {ActionNext}
+} $CLASS
+
+
+#CLASS 0
