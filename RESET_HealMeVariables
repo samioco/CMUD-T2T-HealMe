@@ -1,0 +1,20 @@
+#CLASS 0
+#VAR Healer {} {} VAR
+#VAR iHeal {} {} VAR
+#VAR HealerList {} {} VAR
+#VAR HealStat {} {} VAR
+
+#VAR HEALING_Food_Stop_Messages {} {} VAR
+#ADDI HEALING_Food_Stop_Messages "You are too full to eat another bite."
+#ADDI HEALING_Food_Stop_Messages "There is no jerky here."
+#ADDI HEALING_Food_Stop_Messages "There is no pie here."
+#ADDI HEALING_Food_Stop_Messages "There is no meat pie here."
+#ADDI HEALING_Food_Stop_Messages "Turning your back to your attacker would be suicide!"
+
+#VAR HEALING_Food_Eat_Messages {} {} VAR
+#ADDI HEALING_Food_Eat_Messages "You are briefly transported to more exotic surroundings"
+#ADDI HEALING_Food_Eat_Messages "You slowly eat the pie, getting meat juice all over your chin."
+#ADDI HEALING_Food_Eat_Messages "You chew down the jerky."
+#ADDI HEALING_Food_Eat_Messages "You're too busy to eat, you might choke!"
+
+#CLASS 0
