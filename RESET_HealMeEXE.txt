@@ -1,9 +1,9 @@
-#CLASS 0
+//RESET_HealMeEXE#CLASS 0#AL RESET_HealMeEXE {#CLASS 0
 $CLASS = "Tools|HealMe|EXE"
 #AL HealMe {
 MyProfileVars
 $MaxHP=%number(@MyMaxHP)
-SysMsg HealMe initiated... Running HealMe Check...
+SysMsg HealMe initiated... Running HealMe Check... 
 #MATH MyHPDifferential @MyMaxHP-%number(%mud.hp)
 SysMsg HP Differential: @MyHPDifferential, HP: %mud.hp, MaxHP: @MyMaxHP
 #MATH MyEPDifferential @MyMaxHP-%number(%mud.ep)
@@ -93,7 +93,7 @@ $MaxHP=@{%concat(@MyName,"_MaxHP")}
   #SW (@Healer="narh") {donate 60
   } {DRH
   }
-
+  
 } {HealEnd}
 } $CLASS
 
@@ -117,7 +117,7 @@ ActionAdd "GNB;open account;withdraw 200;gold;ActionNext"
 ActionNext
 }
 } $CLASS
-
+  
 #AL HealHere {
 $roomID=%lower(%roomid())
 $Roaming_HealHere_Rooms=%lower(%concat(@Healers_Roaming,"|Thran|ThranIn|ThranB|Thranshop|ThranI|ThranBar|Loth|khamcamp|DhSP|DHI|TavSP|TavShop|TavI|TavC"))
@@ -146,7 +146,7 @@ $HealHere_Rooms=""
 #UNT "Alarm_HealMe"
 BotOff @Healer
 HealStat
-SysMsg Healer Exhausted: @Healer
+SysMsg Healer Exhausted: @Healer 
 #DELI HealerList @Healer
 $wait=%random(1,2)
 #ALA "Alarm_HealMe" +$wait {HealNextEXE} $CLASS
@@ -203,3 +203,4 @@ HealStop
 
 
 #CLASS 0
+} _HealMe#CLASS 0

@@ -1,4 +1,4 @@
-#CLASS 0
+//RESET_HealersArda#CLASS 0#AL RESET_HealersArda {#CLASS 0
 $ParentClass = "Tools|HealMe|Healers"
 #FORALL @Healers_All {#CLASS %concat($ParentClass,"|",%i)}
 #CLASS 0
@@ -186,7 +186,7 @@ ActionAdd "BotOn KhamH;#T+ Kham_Healer;StartWalk"
 #TR {The healer takes your (%d) gold and heals you.} {HealAgain} $CLASS
 #TR {Healer says*: punt, ashunth toth' eart ari antharg} {HealGetGold} $CLASS
 
-#TR {Healer says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Healer says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS 
 #TR {Healer says*: kxha grunt unth gartxhue snort toth,} {HealAgain} $CLASS
 #TR {Healer says*: You're already healed!} {HealCond} $CLASS
 #TR {Healer says*: olk' eart porl!} {HealCond} $CLASS
@@ -268,4 +268,4 @@ $CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
 #TR {The senile healer accidentally poisons you!} {HealAgain} $CLASS
 #TR {You can't go that way!} {StopWalk;HealNext} $CLASS
 
-#CLASS 0
+#CLASS 0} _HealMe#CLASS 0

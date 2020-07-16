@@ -1,4 +1,4 @@
-#CLASS 0
+//RESET_HealersFarHarad#CLASS 0#AL RESET_HealersFarHarad {#CLASS 0
 $ParentClass = "Tools|HealMe|Healers"
 
 $healer="AzrakH"
@@ -55,4 +55,4 @@ ActionAdd "BotOn TavH;#T+ TavH_Healer;#T+ tavh_what;StartWalk"
 #TR {Haradrim Healer says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
 #TR {You can't go that way!} {StopWalk;HealNext} $CLASS
 
-#CLASS 0
+#CLASS 0} _HealMe#CLASS 0

@@ -1,4 +1,4 @@
-#CLASS 0
+//RESET_HealersWestArda#CLASS 0#AL RESET_HealersWestArda {#CLASS 0
 $ParentClass = "Tools|HealMe|Healers"
 
 $healer="BelH"
@@ -29,4 +29,4 @@ $CLASS = %concat($ParentClass,"|",$healer,"|Settings")
 #TR {Ada says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
 #TR {Ada says*: You're already healed!} {HealCond} $CLASS
 #TR {Ada says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
-#CLASS 0
+#CLASS 0} _HealMe#CLASS 0

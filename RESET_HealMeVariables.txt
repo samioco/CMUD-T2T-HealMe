@@ -1,4 +1,4 @@
-#CLASS 0
+//RESET_HealMeVariables#CLASS 0#AL RESET_HealMeVariables {#CLASS 0
 #VAR Healer {} {} VAR
 #VAR iHeal {} {} VAR
 #VAR HealerList {} {} VAR
@@ -17,4 +17,4 @@
 #ADDI HEALING_Food_Eat_Messages "You chew down the jerky."
 #ADDI HEALING_Food_Eat_Messages "You're too busy to eat, you might choke!"
 
-#CLASS 0
+#CLASS 0} _HealMe#CLASS 0

@@ -1,4 +1,4 @@
-#CLASS 0
+//RESET_HealMeFood#CLASS 0#AL RESET_HealMeFood {#CLASS 0
 $CLASS = "Tools|HealMe|EXE"
 #AL EatFood {
 $myFaction=%lower(@MyFaction)
@@ -97,10 +97,10 @@ BotOff HealMe
 #IF ((@Grinder) && (!%class("GrinderWalk"))) {
   ActionDelete "HealMe"
   ActionAdd "HealMe"
-
+  
 }
 MountPrep
 ActionNext
 } $CLASS
 
-#CLASS 0
+#CLASS 0} _HealMe#CLASS 0
