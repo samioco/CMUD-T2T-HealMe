@@ -1,0 +1,58 @@
+#CLASS 0
+$ParentClass = "Tools|HealMe|Healers"
+
+$healer="AzrakH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Ancalime chops up an herb and feeds it to you!} {HealAgain} $CLASS
+#TR {Ancalime says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {Ancalime says*: You're already healed!} {HealCond} $CLASS
+#TR {Ancalime says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+
+$healer="KHH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {The afipu chants an incantation, and you feel a powerful} {HealAgain} $CLASS
+#TR {Irhwuhlo'Qata says*: nakunlakin abbirasacda hiyya} {HealAgain} $CLASS
+#TR {Irhwuhlo'Qata says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Irhwuhlo'Qata says*: wamutaz' wariqabli miyyajiddan!} {HealCond} $CLASS
+#TR {Irhwuhlo'Qata says: You're already healed!} {HealCond} $CLASS
+#TR {Irhwuhlo'Qata says*: rashidlaqad, you zawajrim} {HealGetGold} $CLASS
+#TR {Irhwuhlo'Qata says*: Sorry, you don't have enough money to afford the} {HealGetGold} $CLASS
+#TR {The afipu must meditate before he can help again.} {HealNext} $CLASS
+
+
+$healer="TarH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Healer forces you to down a potion, then takes %d gold from you.} {HealAgain} $CLASS
+#TR {Healer says*: One at a time! One at a time!} {HealAgain} $CLASS
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Healer says*: I am in this for the profit, slug.  Come back with the right amount of gold!} {HealGetGold} $CLASS
+
+$healer="TurH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#TR {Pagdush smears your wounds with a dark paste} {HealAgain} $CLASS
+#TR {Pagdush says*: Get in line, scum!} {HealAgain} $CLASS
+#TR {Pagdush says*: Come back when you have some real wounds!} {HealCond} $CLASS
+#TR {The healer is out of supplies.} {HealNext} $CLASS
+#TR {Pagdush says*: Not enough supplies to heal everyone.  You need} {HealGetGold} $CLASS
+
+$healer="TavH"
+$CLASS = %concat($ParentClass,"|",$healer,"|Settings")
+#VAR TavH_Path {%concat(".(glance);.n2wnwen2eswe2s;.(StopWalk;HealNext)")} {} VAR
+#AL TavHFind {
+StopWalk;#T- TavH_Healer;#T- TavH_What
+#PATH WalkPath @TavH_Path
+ActionAdd "BotOn TavH;#T+ TavH_Healer;#T+ tavh_what;StartWalk"
+#WALK TavSP;ActionNext
+} %concat($ParentClass,"|",$healer)
+
+#TR TavH_Healer {A Haradrim healer} {StopWalk;#STOP;#T- TavH_Healer;request healing} $CLASS
+#TR TavH_What {^What} {StopWalk;#IF (%pos("Tavorus",%zonename())) {TavHFind}} $CLASS
+#TR {Haradrim Healer leaves %1.} {#STOP;StopWalk;#EXE {%1};request healing} $CLASS
+#TR {Haradrim Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {The haradrim healer uses her knowledge and power to improve your condition.} {HealAgain} $CLASS
+#TR {Haradrim Healer says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Haradrim Healer says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {You can't go that way!} {StopWalk;HealNext} $CLASS
+
+#CLASS 0
