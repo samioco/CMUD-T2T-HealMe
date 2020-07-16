@@ -1,0 +1,271 @@
+#CLASS 0
+$ParentClass = "Tools|HealMe|Healers"
+#FORALL @Healers_All {#CLASS %concat($ParentClass,"|",%i)}
+#CLASS 0
+
+$Healer="OsgH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Uruk-hai healer says*: I don't work for free!} {HealGetGold} $CLASS
+#TR {The healer forces you to drink a repulsive dark green} {HealAgain} $CLASS
+#TR {Uruk-hai healer says*: Hold your elf-slaves!%sI'm busy!} {HealAgain} $CLASS
+#TR {Uruk-hai healer says*: You no need heal!%sC'mere, lemme smack you up some first!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+
+$Healer="ALH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Viskar takes your (%d) gold, then applies a soothing salve on your} {HealAgain} $CLASS
+#TR {Viskar says*: Wait!  Not now!  I'm still busy!} {HealAgain} $CLASS
+#TR {Viskar says*: You look perfectly healthy to me already!} {HealCond} $CLASS
+
+$Healer="CaraH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The healer takes your (%d) gold and heals you.} {HealAgain} $CLASS
+#TR {Healer says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+
+$Healer="MoriaH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Shila uses her skills to heal you.} {HealAgain} $CLASS
+#TR {Shila says*: alnombe ne nestir chad tankh tin} {HealAgain} $CLASS
+//#TR {Shila says in some strange tongue: dam' brin garduer!} {HealGetGold} $CLASS
+
+$Healer="CorH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Armeniel heals you for (%d) gold.} {HealAgain} $CLASS
+#TR {Armeniel says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Armeniel says*: You're already healed!} {HealCond} $CLASS
+#TR {Armeniel says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+
+$Healer="DaleH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {She forces you to drink some awful tasting brew, but} {HealAgain} $CLASS
+#TR {Healer says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Healer says*: kxha grunt unth gartxhue snort toth,} {HealAgain} $CLASS
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Healer says*: olk' eart porl!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Healer says*: Sorry, you don't have enough money to afford the} {HealGetGold} $CLASS
+
+$Healer="DHH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#VAR DHH_Path {%concat("swkh;.(out)sh;.(out)w;.(out)sles;.(out)n;.(out)ejl;.(out)hn;.(out)2e;.(out)j;.(out)nj;.(out)hwn;.(StopWalk;HealNext)")} {} VAR
+#AL DHHFind {
+StopWalk;#T- DHH_What;#T- DHH_OldMan
+#PATH WalkPath @DHH_Path
+ActionAdd "BotOn DHH;#T+ DHH_OldMan;StartWalk"
+#WALK DhSP;#WAIT 1000;ActionNext
+} %concat($ParentClass,"|",$Healer)
+
+#TR DHH_OldMan {An old and wise man} {#STOP;StopWalk;#T- DHH_OldMan;request healing} $CLASS
+#TR {Healer leaves %1.} {#STOP;StopWalk;#EXE {%1};request healing} $CLASS
+#TR {Healer uses his medicine to heal you and says: You should feel better now.} {HealAgain} $CLASS
+#TR {Healer says*: I'm busy healing someone.  Please wait in the line.} {HealAgain} $CLASS
+#TR {Healer says*: Looks like you don't need any healing.} {HealCond} $CLASS
+#TR {Healer says*: I need some rest now.  Please wait a few minutes.} {HealNext} $CLASS
+#TR {Healer says*: You don't have enough gold to pay for the treatment.} {HealGetGold} $CLASS
+#TR {You can't go that way!} {StopWalk;HealNext} $CLASS
+//#TR dhh_oldmanRoomShort {^An old and wise man} {#T- dhh_oldman;#T- dhh_check;#T- dhh_wisemanRoomShort;healnow} dhh|Settings
+//#TR dhh_check {You don't see that here.} {#T- dhh_check;#T- dhh_wisemanRoomShort;StopWalk;dhhFind} dhh|Settings
+
+$Healer="DunH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Healer heals you for (%d) gold.} {HealAgain} $CLASS
+#TR {Edala says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Edala says*: You look perfectly healthy to me, dear.} {HealCond} $CLASS
+#TR {The nurse is exhausted and needs time to rest!} {HealNext} $CLASS
+#TR {Edala says*: I don't work for free, hon.} {HealGetGold} $CLASS
+#TR {A guard stands in your face, challenging you to get past him to enter.} {HealNext} $CLASS
+
+$Healer="EdoH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The old man pokes and prods, and you feel better.} {HealAgain} $CLASS
+#TR {Eomal says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Eomal says*: hasufel rashyrne eld elf linggrim} {HealAgain} $CLASS
+#TR {Eomal says*: You're already healed!} {HealCond} $CLASS
+#TR {Eomal says*: meaha' merhar guthed!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Eomal says*: Sorry, you don't have enough money to afford the} {HealGetGold} $CLASS
+#TR {Eomal says*: herefen, you odhelm' merhar rafhere} {HealGetGold} $CLASS
+
+$Healer="EreH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The Doctor forces you to drink some bad smelling tea.} {HealAgain} $CLASS
+#TR {Doctor says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Doctor says*: You're already healed!} {HealCond} $CLASS
+#TR {The Doctor is exhausted and needs time to rest.} {HealNext} $CLASS
+
+$Healer="EsgH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Cadfael forces you to inhale some leaves and you feel better.} {HealAgain} $CLASS
+#TR {Cadfael says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Cadfael shakes his head. 'I'm all out of herbs!'} {HealNext} $CLASS
+
+$Healer="EthH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Alliera brews up a strange potion, and forces you to drink it.} {HealAgain} $CLASS
+#TR {Alliera says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Alliera says*: You're already healed!} {HealCond} $CLASS
+#TR {Alliera sighs. 'I'm too weary to heal anyone.'} {HealNext} $CLASS
+#TR {Alliera says*: I don't deal with your type!} {healcheckfaction} $CLASS
+#TR {Alliera says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+
+$Healer="FramH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The nurse shakes her head at you, denying her services.} {HealNext} $CLASS
+#TR {Nurse takes (%d) gold and has you drink some bad smelling tea.} {HealAgain} $CLASS
+#TR {Nurse says*: Give me a moment, please.} {HealAgain} $CLASS
+#TR {Nurse says*: You do not seem to require my services.} {HealCond} $CLASS
+#TR {You are too busy to be healed.} {HealNext} $CLASS
+
+$Healer="FramOH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Orc medic says*: Wait.  Me busy helping comrade.} {HealAgain} $CLASS
+#TR {He pulls out a flask and pours some foul liquid down your throat.} {HealAgain} $CLASS
+#TR {Orc medic says*: You're already healed!} {HealCond} $CLASS
+#TR {The orc medic grunts, shrugs and shakes his head.} {HealNext} $CLASS
+#TR {What?} {HealNext} $CLASS
+#TR {Orc medic says*: The medic is the one that needs help!} {HealNext} $CLASS
+#TR {The medic refuses to help you.} {HealNext} $CLASS
+#TR {Orc medic says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {You are too busy to be healed.} {HealNext} $CLASS
+
+$Healer="GalH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The woman takes (%d) gold and heals you!} {HealAgain} $CLASS
+#TR {Wise woman says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Wise woman says*: You're already healed!} {HealCond} $CLASS
+#TR {Wise woman says*: Sorry, you don't have enough money} {HealGetGold} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+
+$Healer="HarH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {The healer takes (%d) gold and heals you!} {HealAgain} $CLASS
+#TR {Haradrim healer says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Haradrim healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Haradrim healer says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {Haradrim healer says* : I don't deal with your type!} {healcheckfaction} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+
+$Healer="HutH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Healer heals you for (%d) gold} {HealAgain} $CLASS
+#TR {Nazrat says*: Hold your horses!  I can't do everything at once!} {HealAgain} $CLASS
+#TR {Nazrat says*: You are as healthy as you'll ever get.} {HealCond} $CLASS
+#TR {The woman ignores you.} {HealNext} $CLASS
+#TR {Nazrat says*: I don't work for free, you little snot!} {HealGetGold} $CLASS
+
+$Healer="IHH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Gurah-zaram brews a bitter tea and makes you drink it.} {HealAgain} $CLASS
+#TR {Gurah-zaram says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Gurah-zaram says*: You're already healed!} {HealCond} $CLASS
+
+$Healer="KadH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Sandra takes an herb off the shelf and heals you.} {HealAgain} $CLASS
+#TR {Sandra says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+#TR {Sandra says*: You're already healed!} {HealCond} $CLASS
+#TR {Sandra says*: I am currently out of healing herbs.}  {HealNext} $CLASS
+#TR {Sandra says*: Sorry, you don't have enough money to afford the treatment.} {HealGetGold} $CLASS
+#TR {Sandra says*: I don't deal with your type!} {healcheckfaction} $CLASS
+
+
+$Healer="KhamH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#VAR KhamH_Path {%concat("2n2wsnhlns2wen2sn3e2n2s2e3n3se;.(enter)2e4wse;.(tent);.(out)ws;.(latrine);.(out)2n2wsw2e;.(enter);.n2snew;.(out);.ws;.(StopWalk;HealNext)")} {} VAR
+#AL KhamhFind {
+StopWalk;#T- Kham_Healer;#T- Kham_What
+#PATH WalkPath @KhamH_Path
+ActionAdd "BotOn KhamH;#T+ Kham_Healer;StartWalk"
+#WALK KhamCamp;ActionNext
+} %concat($ParentClass,"|",$Healer)
+
+#TR Kham_Healer {An orc healer} {#STOP;StopWalk;#T- Kham_Healer;request healing} $CLASS
+#TR {Healer leaves %1.} {#STOP;StopWalk;#EXE {%1};request healing} $CLASS
+#TR {The healer takes your (%d) gold and heals you.} {HealAgain} $CLASS
+#TR {Healer says*: punt, ashunth toth' eart ari antharg} {HealGetGold} $CLASS
+
+#TR {Healer says*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Healer says*: kxha grunt unth gartxhue snort toth,} {HealAgain} $CLASS
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Healer says*: olk' eart porl!} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {You are too busy to be healed.} {HealNext} $CLASS
+#TR {Healer says*: Sorry, you don't have enough money} {HealGetGold} $CLASS
+#TR {You can't go that way!} {StopWalk;HealNext} $CLASS
+//#TR khamh_HealerRoomShort {^An orc healer} {#T- khamh_HealerRoomShort;#T- khamh_check;#T- khamh_HealerRoomShort;healnow} khamh|Settings
+//#TR khamh_check {You don't see that here.} {#T- khamh_check;#T- khamh_HealerRoomShort;StopWalk;khamhFind} khamh|Settings
+
+
+$Healer="KnollH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Medicine man says*: I am busy, please wait a few seconds.} {HealAgain} $CLASS
+#TR {The medicine man uses his knowledge of various healing arts to heal you.} {HealAgain} $CLASS
+#TR {Medicine man says*: You do not require my services.} {HealCond} $CLASS
+#TR {The healer is exhausted.} {HealNext} $CLASS
+#TR {Medicine man says*: I am sorry, but more money is needed for healing.} {HealGetGold} $CLASS
+
+$Healer="MTH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Al uses his knowledge of herbs to heal you.} {HealAgain} $CLASS
+#TR {Al says*: Hold on a second.  I'm a little busy.} {HealAgain} $CLASS
+#TR {so many people, I am tired!  Give me some time to rest, please.} {HealNext} $CLASS
+#TR {Al says*: But you are already fully healed!} {HealCond} $CLASS
+
+$Healer="OutH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Healer shoves some foul black liquid into your mouth} {HealAgain} $CLASS
+#TR {Healer says*: Wait your turn!} {HealAgain} $CLASS
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {The healer is out of healing liquids.} {HealNext} $CLASS
+#TR {Healer says*: If you don't have money, get out now.} {HealGetGold} $CLASS
+
+$Healer="PelH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Wise man uses his medicine to heal you} {HealAgain} $CLASS
+#TR {Healer says*: I'm busy healing someone.  Please wait in the line.} {HealAgain} $CLASS
+#TR {Healer says*: Looks like you don't need any healing.} {HealCond} $CLASS
+#TR {Wise man says*: I need some rest now.  Please wait a few minutes.} {HealNext} $CLASS
+#TR {Healer says*: You don't have enough money to pay for the treatment.} {HealGetGold} $CLASS
+
+$Healer="PelH2"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {He then takes your (%d) gold and applies a healing herb} {HealAgain} $CLASS
+#TR {Healer says*: Wait a moment, I cannot heal so fast.} {HealAgain} $CLASS
+#TR {Healer says*: You are already very healthy, young one.} {HealCond} $CLASS
+#TR {The healer says*: I am sorry, I must save my remaining strength for} {HealNext} $CLASS
+#TR {Healer says*: Sorry, but I cannot heal for free.  We need money to repair} {HealGetGold} $CLASS
+#TR {^What?} {#SW (%roomname()="The House of Healing main hall") {w;request healing} (%roomname()="The right ward") {.2e;request healing} (%roomname()="The left ward") {w;request healing}} $CLASS
+
+$Healer="SFlaskH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Healer says*: You're already healed!} {HealCond} $CLASS
+#TR {Healer heals you for (%d) gold.} {HealAgain} $CLASS
+#TR {Healer says*: Just hold on a second please, I'm busy healing someone.} {HealAgain} $CLASS
+
+$Healer="SGH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#TR {Healer chants something and feeds you some herbs.} {#ADD MyGold -%number(20);HealAgain} $CLASS
+#TR {Healer says*: kxha oait unth gartxhue ein toth,} {HealAgain} $CLASS
+#TR {Healer says in*: Just hold on a second please, I'm busy healing} {HealAgain} $CLASS
+#TR {Healer says*: olk' eart porl!} {HealCond} $CLASS
+#TR {Healer says*: punt, you toth' eart ari antharg kxha} {HealGetGold} $CLASS
+#TR {Healer says*: narangst gha, oinporl!} {HealNext} $CLASS
+
+$Healer="ThranH"
+$CLASS = %concat($ParentClass,"|",$Healer,"|Settings")
+#VAR Thranh_path {%concat(".(glance);.k2wh3jels;.(StopWalk;HealNext)")} {} VAR
+#AL ThranHFind {#T- ThranH_Healer;#PATH WalkPath @Thranh_path;ActionAdd "BotOn ThranH;#T+ ThranH_Healer;StartWalk";#WALK ThranCrossroads;ActionNext}  %concat($ParentClass,"|",$Healer)
+#TR ThranH_Healer {^ A senile healer} {StopWalk;#T- ThranH_Healer;request healing} $CLASS
+//#TR Thranh_what {^What} {StopWalk;#IF (%zonenum=8) {ThranhFind}} $CLASS
+#TR {Senile healer leaves %1.} {#EXE {%1};request healing} $CLASS
+#TR {Senile healer says*: fin we' sir gi wounds ereurh} {HealCond} $CLASS
+#TR {The senile healer forces you to eat a nasty smelling shroom.} {HealAgain} $CLASS
+#TR {Senile healer says*: neldordou nizh ereurh arh duin} {HealAgain} $CLASS
+#TR {The healer just ignores you!} {HealNext} $CLASS
+#TR {Senile healer says*: urhwe gi sir you we lith fin} {HealGetGold} $CLASS
+#TR {The senile healer accidentally poisons you!} {HealAgain} $CLASS
+#TR {You can't go that way!} {StopWalk;HealNext} $CLASS
+
+#CLASS 0
