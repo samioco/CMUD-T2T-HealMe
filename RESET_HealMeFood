@@ -1,0 +1,106 @@
+#CLASS 0
+$CLASS = "Tools|HealMe|EXE"
+#AL EatFood {
+$myFaction=%lower(@MyFaction)
+#ECHO HP detected as: %mud.hp
+$action=%item(@PartyLeader_que_emote,%random(%numitems(@PartyLeader_que_emote)))
+#IF ((@Party) AND (@PartyLeader=@MyName)) {#EXE {$action}}
+$foodHeal=0
+$food=""
+#SW (@MeatPies>0) {
+  $food="meat pie"
+  $foodHeal=30
+} (@Jerky>0) {
+  $food="jerky"
+  $foodHeal=20
+}
+#IF (((@MyMaxHP-%mud.hp)>=$foodHeal) && ($food)) {
+  EatFoodEXE
+} {
+  BotOff HealMe
+  ActionNext
+}
+} $CLASS
+
+#AL EatFoodEXE {
+$myWagon=%lower(@MyWagon)
+$myFaction=%lower(@MyFaction)
+$PartyLeaderPossessive=@PartyLeaderPossessive
+$PartyLeader_Wagon=%lower(%concat($PartyLeaderPossessive," wagon"))
+$source=""
+$foodHeal=0
+$food=""
+#SW (@MeatPies>0) {
+  $food="meat pie"
+  $foodHeal=30
+} (@Jerky>0) {
+  $food="jerky"
+  $foodHeal=20
+}
+#IF (@Party) {$source=$PartyLeader_Wagon} {
+  #SW (@Gear_Wagon) {$source=@myWagon
+  } (@Gear_Saddlebags) {$source="saddlebags"
+  } (@Gear_Panniers) {$source="panniers"
+  } (@Gear_Pack) {$source="pack"}
+}
+BotOn HealMe
+#IF (@Mounted) {dismount}
+#IF (!@Party) {rw}
+do drop $food from $source,drop $food from pack,eat $food,get all $food into $source,get all $food into pack
+#IF (!@Party) {ww}
+MountPrep
+} $CLASS
+
+#CLASS 0
+$CLASS = "Tools|HealMe|Settings"
+#TR {Your balance is only %1;} {
+#IF (%1<200) {
+  HealStop
+  ActionDelete "EatFood"
+  ActionDelete "EatFoodEXE"
+  ActionDelete "HealMe"
+  ActionDelete "HealMeEXE"
+  ActionAdd "HealEnd"
+  ActionNext
+}
+} $CLASS
+
+#TR CantEatWhileRiding {You can't reach that while riding.} {
+dismount
+EatFoodEXE
+} $CLASS
+
+#TR HealMeEatFood {{@HEALING_Food_Eat_Messages}} {
+#SW (@MeatPies) {#ADD MeatPies -1
+} (@Jerky) {#ADD Jerky -1}
+$deficit=0
+$foodHeal=0
+$food=""
+#SW (@MeatPies>0) {
+  $food="meat pie"
+  $foodHeal=30
+} (@Jerky>0) {
+  $food="jerky"
+  $foodHeal=20
+}
+#IF ((@MyMaxHP-%mud.hp)>=$foodHeal) {
+  #WAIT 500
+  EatFood
+} {
+  BotOff HealMe
+  ActionNext
+}
+} $CLASS
+
+#TR HealMeEatStop {{@HEALING_Food_Stop_Messages}} {
+BotOff HealMe
+#IF ((@Grinder) && (!%class("GrinderWalk"))) {
+  ActionDelete "HealMe"
+  ActionAdd "HealMe"
+
+}
+MountPrep
+ActionNext
+} $CLASS
+
+#CLASS 0
